@@ -1,5 +1,4 @@
 #include <memory.h>
-
 #include <cstdint>
 #include <iostream>
 #include <cstdint>
