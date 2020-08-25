@@ -55,7 +55,7 @@ _Z12eratosthenesjPj:
   blt   3b			@go back to normal operation
  finish:
   mov   r0, r7
-  pop   {pc}
+  pop   {r9, pc}
  8:
   orr   r9, r3			@r9; next element bits
   bl    4b
@@ -77,9 +77,9 @@ _Z12eratosthenesjPj:
   cmp   r5, r0
   bge   6b			@store if reached limit
   lsr   r10, r5, #5
-  sub   r12, r10, r11		@go to orr, push, or pop
-  cmp   r12, #0
+  sub   r10, r11		@go to orr, push, or pop
+  cmp   r10, #0
   beq   8b
-  cmp   r12, #1
+  cmp   r10, #1
   beq   9b
   bgt   10b
