@@ -9,7 +9,7 @@ _Z12eratosthenesjPj:		@r7=overflow bit; r8=next odd#; r9=element to load/store
   subs  r2, #1
   bne   set
   mov   r3, #1
-  mov   r5, #0
+  mov   r5, #1
   mov   r4, #32
   ldr   r8, =0x80000000
   mov   r2, r8
@@ -67,6 +67,7 @@ _Z12eratosthenesjPj:		@r7=overflow bit; r8=next odd#; r9=element to load/store
   str   r10, [r1, r9]
  final:
   ldr   r10, [r1, r9]
+  add   r12, #2
   add   r3, #1
   lsrs  r2, #1
   beq   reset
@@ -75,7 +76,7 @@ _Z12eratosthenesjPj:		@r7=overflow bit; r8=next odd#; r9=element to load/store
   add   r5, #1
   orr   r10, r2
   str   r10, [r1, r9]
-  cmp   r3, r0
+  cmp   r12, r0
   blt   final
  store:
   mov   r0, r5
