@@ -31,8 +31,8 @@ _Z12eratosthenesjPj:		@r7=overflow bit; r8=next odd#; r9=element to load/store
   bge   5f			@begin final loops
   sub   r11, r4, r3
  3:				@load and store overflow
-  sub   r11, r12, r11
-  cmp   r12, #32
+  sub   r10, r12, r11
+  cmp   r10, #32
   bgt   6f
   add   r9, #4
   ldr   r10, [r1, r9]
@@ -80,6 +80,7 @@ _Z12eratosthenesjPj:		@r7=overflow bit; r8=next odd#; r9=element to load/store
   cmp   r12, r0
   blt   final
  store:
+  str   r10, [r1, r9]
   mov   r0, r5
   pop   {r4-r12}
   bx    lr
