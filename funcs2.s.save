@@ -27,30 +27,33 @@ _Z12eratosthenesjPj:		@r7=overflow bit; r8=next odd#; r9=element to load/store
   bne   2b			@loop normal op
   str   r10, [r1, r9]
   add   r6, r3, r12		@check for last element
-  mov   r11, r0
+  sub   r11, r0, #1
   lsr   r11, #1
   cmp   r11, r6
-  ble   final			@begin final loops
+  bge   5f			@begin final loops
   sub   r11, r4, r3
  3:
-  mov   r8, r9			@load and store overflow
+  push  {r9, r10}				@load and store overflow
   sub   r6, r12, r11
   cmp   r6, #32
   bgt   6f
   add   r9, #4
-  ldr   r6, [r1, r9]
-  orr   r7, r6
-  str   r7, [r1, r9]
-  mov   r9, r8
   ldr   r10, [r1, r9]
+  orr   r7, r10
+  str   r7, [r1, r9]
+  @sub   r9, #4
+  pop   {r9, r10}
+  ldr   r10, [r1, r9]
+ 4:
   cmp   r12, r0
   bge   store
- 4:
   add   r3, #1			@next +1 value
   add   r12, #2			@increment +=2 (shifter)
   lsr   r2, #1
   tst   r10, r2
   bne   4b
+  cmp   r2, #0
+  bne   1b
   add   r4, #32
   ldr   r2, =0x800000000
   add   r9, #4
@@ -62,8 +65,10 @@ _Z12eratosthenesjPj:		@r7=overflow bit; r8=next odd#; r9=element to load/store
  reset:
   add   r9, #4
   ldr   r2, =0x80000000
+ 5:				@final countdown
+  @str   r10, [r1, r9]
  final:
-  ldr   r10, [r1, r9]		@final countdown
+  ldr   r10, [r1, r9]
   add   r12, #2
   add   r3, #1
   lsrs  r2, #1
